@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Build outputs
+build/
+dist/
+src-tauri/target/
+src-tauri/gen/
+
+# Runtime data
+data/
+
+# Local tooling
+.tools/captures/
+.tools/*.exe
+
+# OS files
+Thumbs.db
+.DS_Store

@@ -1,0 +1,20 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "enables the default permissions",
+  "windows": [
+    "main",
+    "deck-create",
+    "deck-settings",
+    "deck-editor",
+    "deck-detail",
+    "day-detail",
+    "study-launcher",
+    "study-session"
+  ],
+  "permissions": [
+    "core:default",
+    "core:webview:allow-create-webview-window",
+    "core:window:allow-close"
+  ]
+}
