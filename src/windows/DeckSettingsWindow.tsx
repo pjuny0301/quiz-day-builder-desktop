@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { ImagePasteField } from "../components/ImagePasteField";
+import { BackActionButton } from "../components/BackActionButton";
+import { DeckBasicsFields } from "../components/DeckBasicsFields";
 import { WindowShell } from "../components/WindowShell";
 import { applyDeckSplit } from "../lib/state-utils";
 import { openManager } from "../lib/tauri";
@@ -75,12 +76,7 @@ export function DeckSettingsWindow() {
 
   if (isLoading && !deck) {
     return (
-      <WindowShell
-        role="deck-settings"
-        eyebrow="덱 편집"
-        title="덱 편집 화면을 불러오는 중입니다"
-        description="이 화면은 한 덱의 이름, 대표 이미지, 숫자 설정을 편집합니다."
-      >
+      <WindowShell role="deck-settings" eyebrow="덱 편집" title="덱 편집 화면을 불러오는 중입니다" description="이 화면은 한 덱의 이름, 대표 이미지, 숫자 설정을 편집합니다.">
         <div className="empty-state">덱 설정을 불러오는 중입니다.</div>
       </WindowShell>
     );
@@ -88,12 +84,7 @@ export function DeckSettingsWindow() {
 
   if (loadError && !deck) {
     return (
-      <WindowShell
-        role="deck-settings"
-        eyebrow="덱 편집"
-        title="덱 편집 화면을 열 수 없습니다"
-        description="이 화면은 한 덱의 이름, 대표 이미지, 숫자 설정을 편집합니다."
-      >
+      <WindowShell role="deck-settings" eyebrow="덱 편집" title="덱 편집 화면을 열 수 없습니다" description="이 화면은 한 덱의 이름, 대표 이미지, 숫자 설정을 편집합니다.">
         <div className="empty-state">불러오기에 실패했습니다: {loadError}</div>
       </WindowShell>
     );
@@ -101,12 +92,7 @@ export function DeckSettingsWindow() {
 
   if (!deck) {
     return (
-      <WindowShell
-        role="deck-settings"
-        eyebrow="덱 편집"
-        title="덱을 찾을 수 없습니다"
-        description="이 화면은 한 덱의 이름, 대표 이미지, 숫자 설정을 편집합니다."
-      >
+      <WindowShell role="deck-settings" eyebrow="덱 편집" title="덱을 찾을 수 없습니다" description="이 화면은 한 덱의 이름, 대표 이미지, 숫자 설정을 편집합니다.">
         <div className="empty-state">요청한 덱이 없습니다.</div>
       </WindowShell>
     );
@@ -122,36 +108,24 @@ export function DeckSettingsWindow() {
       description="덱 이름, 대표 이미지, 정답 표시 지연시간, Day당 카드 수는 이 전용 화면에서만 변경합니다. 삭제는 목록의 더보기 메뉴에서 진행합니다."
       status={validationMessage || saveStatusMessage}
       actions={
-        <button className="button button--ghost" onClick={() => void openManager(deck.id, true)}>
-          목록으로
-        </button>
+        <BackActionButton actionId="deck-settings.back-to-manager" onClick={() => void openManager(deck.id, true)} />
       }
     >
       <section className="form-shell">
-        <label className="field">
-          <span>덱 이름</span>
-          <input
-            value={name}
-            onChange={(event) => {
-              setName(event.target.value);
-              if (validationMessage) {
-                setValidationMessage("");
-              }
-            }}
-            placeholder="덱 이름"
-            autoFocus
-          />
-        </label>
-
-        <div className="field">
-          <span>대표 이미지</span>
-          <ImagePasteField value={coverImageDataUrl} onChange={setCoverImageDataUrl} />
-        </div>
-
-        <label className="field">
-          <span>정답 표시 지연시간(ms)</span>
-          <input type="number" min={0} step={100} value={delayMs} onChange={(event) => setDelayMs(Number(event.target.value))} />
-        </label>
+        <DeckBasicsFields
+          name={name}
+          onNameChange={(value) => {
+            setName(value);
+            if (validationMessage) {
+              setValidationMessage("");
+            }
+          }}
+          coverImageDataUrl={coverImageDataUrl}
+          onCoverImageChange={setCoverImageDataUrl}
+          delayMs={delayMs}
+          onDelayMsChange={setDelayMs}
+          autoFocus
+        />
 
         <label className="field">
           <span>Day당 카드 수</span>
@@ -166,10 +140,8 @@ export function DeckSettingsWindow() {
         {validationMessage ? <div className="inline-message inline-message--error">{validationMessage}</div> : null}
 
         <div className="stack-actions">
-          <button className="button button--ghost" onClick={() => void openManager(deck.id, true)}>
-            취소
-          </button>
-          <button className="button button--primary" onClick={() => void handleSave()}>
+          <BackActionButton actionId="deck-settings.cancel" onClick={() => void openManager(deck.id, true)} />
+          <button className="button button--primary" data-action-id="deck-settings.save" onClick={() => void handleSave()}>
             저장
           </button>
         </div>

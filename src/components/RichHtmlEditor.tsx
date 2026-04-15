@@ -1,19 +1,32 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type KeyboardEventHandler, type MutableRefObject } from "react";
 
 interface RichHtmlEditorProps {
   value: string;
   placeholder: string;
   onChange: (html: string) => void;
+  className?: string;
+  editorRef?: MutableRefObject<HTMLDivElement | null>;
+  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
 }
 
 
 // Edit stored card HTML and turn pasted images into inline data URLs for immediate persistence.
-export function RichHtmlEditor({ value, placeholder, onChange }: RichHtmlEditorProps) {
-  const ref = useRef<HTMLDivElement | null>(null);
+export function RichHtmlEditor({ value, placeholder, onChange, className = "", editorRef, onKeyDown }: RichHtmlEditorProps) {
+  const localRef = useRef<HTMLDivElement | null>(null);
+
+  const setEditorNode = useCallback(
+    (node: HTMLDivElement | null) => {
+      localRef.current = node;
+      if (editorRef) {
+        editorRef.current = node;
+      }
+    },
+    [editorRef],
+  );
 
   useEffect(() => {
-    if (ref.current && ref.current.innerHTML !== value) {
-      ref.current.innerHTML = value || "";
+    if (localRef.current && localRef.current.innerHTML !== value) {
+      localRef.current.innerHTML = value || "";
     }
   }, [value]);
 
@@ -33,16 +46,17 @@ export function RichHtmlEditor({ value, placeholder, onChange }: RichHtmlEditorP
     event.preventDefault();
     const dataUrl = await fileToDataUrl(file);
     insertHtmlAtCursor(`<p><img src="${dataUrl}" alt="Pasted card asset" /></p>`);
-    onChange(ref.current?.innerHTML ?? "");
+    onChange(localRef.current?.innerHTML ?? "");
   }
 
   return (
     <div
-      ref={ref}
-      className="rich-editor"
+      ref={setEditorNode}
+      className={`rich-editor ${className}`.trim()}
       contentEditable
       data-placeholder={placeholder}
       onInput={(event) => onChange(event.currentTarget.innerHTML)}
+      onKeyDown={onKeyDown}
       onPaste={handlePaste}
       suppressContentEditableWarning
     />
@@ -61,7 +75,13 @@ function fileToDataUrl(file: File): Promise<string> {
 }
 
 
+// Insert a stable divider marker at the current caret position so bulk parsing can split blocks reliably.
+export function insertDividerAtCursor() {
+  insertHtmlAtCursor('<div data-bulk-divider="true" class="bulk-divider-marker"><hr /></div><p><br></p>');
+}
+
+
 // Insert HTML at the current contenteditable caret position.
-function insertHtmlAtCursor(html: string) {
+export function insertHtmlAtCursor(html: string) {
   document.execCommand("insertHTML", false, html);
 }

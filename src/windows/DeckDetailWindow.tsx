@@ -1,8 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import { BackActionButton } from "../components/BackActionButton";
 import { WindowShell } from "../components/WindowShell";
-import { calculateDayAccuracyRate, formatDayRecentScore, formatDayTotals } from "../lib/deck-summary";
+import { registerAutomationAction } from "../lib/automation";
+import { calculateDayAccuracyRate, formatDayRecentScore } from "../lib/deck-summary";
 import { openDayDetail, openDeckEditor, openManager, openStudyLauncher } from "../lib/tauri";
 import { useAppState } from "../state/AppStateContext";
 
@@ -32,14 +34,47 @@ export function DeckDetailWindow() {
     });
   }, [daySearch, deck]);
 
+  useEffect(() => {
+    if (!deck) {
+      return;
+    }
+
+    // Register stable named actions so external test drivers can move through the Day list without coordinates.
+    const disposeAddCard = registerAutomationAction("deck-detail.add-card", async () => {
+      await openDeckEditor(deck.id, { draft: true });
+    });
+    const disposeStudyAll = registerAutomationAction("deck-detail.study-all", async () => {
+      if (deck.cards.length === 0) {
+        return;
+      }
+      await openStudyLauncher(deck.id, { scope: "all" });
+    });
+    const disposeOpenDay = registerAutomationAction("deck-detail.open-day", async (payload) => {
+      const dayNumber = typeof payload?.dayNumber === "number" ? payload.dayNumber : filteredDays[0]?.day;
+      if (!dayNumber) {
+        return;
+      }
+      await openDayDetail(deck.id, dayNumber);
+    });
+    const disposeStudyDay = registerAutomationAction("deck-detail.study-day", async (payload) => {
+      const dayNumber = typeof payload?.dayNumber === "number" ? payload.dayNumber : filteredDays.find((day) => day.card_ids.length > 0)?.day;
+      if (!dayNumber) {
+        return;
+      }
+      await openStudyLauncher(deck.id, { dayNumber, scope: "day" });
+    });
+
+    return () => {
+      disposeAddCard();
+      disposeStudyAll();
+      disposeOpenDay();
+      disposeStudyDay();
+    };
+  }, [deck, filteredDays]);
+
   if (isLoading && !deck) {
     return (
-      <WindowShell
-        role="deck-detail"
-        eyebrow="덱 상세"
-        title="덱 정보를 불러오는 중입니다"
-        description="이 화면은 한 덱의 Day 구조만 보여줍니다."
-      >
+      <WindowShell role="deck-detail" eyebrow="덱 상세" title="덱 정보를 불러오는 중입니다" description="이 화면은 한 덱의 Day 구조만 보여줍니다.">
         <div className="empty-state">덱 정보를 불러오는 중입니다.</div>
       </WindowShell>
     );
@@ -47,12 +82,7 @@ export function DeckDetailWindow() {
 
   if (loadError && !deck) {
     return (
-      <WindowShell
-        role="deck-detail"
-        eyebrow="덱 상세"
-        title="덱 상세를 열 수 없습니다"
-        description="이 화면은 한 덱의 Day 구조만 보여줍니다."
-      >
+      <WindowShell role="deck-detail" eyebrow="덱 상세" title="덱 상세를 열 수 없습니다" description="이 화면은 한 덱의 Day 구조만 보여줍니다.">
         <div className="empty-state">불러오기에 실패했습니다: {loadError}</div>
       </WindowShell>
     );
@@ -60,12 +90,7 @@ export function DeckDetailWindow() {
 
   if (!deck) {
     return (
-      <WindowShell
-        role="deck-detail"
-        eyebrow="덱 상세"
-        title="덱을 찾을 수 없습니다"
-        description="이 화면은 한 덱의 Day 구조만 보여줍니다."
-      >
+      <WindowShell role="deck-detail" eyebrow="덱 상세" title="덱을 찾을 수 없습니다" description="이 화면은 한 덱의 Day 구조만 보여줍니다.">
         <div className="empty-state">요청한 덱이 없습니다.</div>
       </WindowShell>
     );
@@ -76,39 +101,37 @@ export function DeckDetailWindow() {
       role="deck-detail"
       eyebrow="덱 상세"
       title={deck.name}
-      description="Day 리스트"
+      description=""
       status={saveStatusMessage}
       actions={
-        <button className="button button--ghost" onClick={() => void openManager(deck.id)}>
-          목록으로
-        </button>
+        <BackActionButton actionId="deck-detail.back-to-manager" onClick={() => void openManager(deck.id)} />
       }
     >
-      <section className="hero-panel hero-panel--deck-detail">
-        <div>
-          <p className="hero-panel__eyebrow">핵심 기능</p>
-          <h2 className="hero-panel__title">Day 리스트</h2>
-          <p className="hero-panel__body">원하는 Day를 열거나 바로 학습하세요.</p>
-        </div>
-        <div className="hero-panel__actions">
-          <button className="button button--secondary" onClick={() => void openDeckEditor(deck.id, { draft: true })}>
+      <section className="deck-detail-toolbar">
+        <div className="deck-detail-toolbar__actions">
+          <button className="button button--secondary" data-action-id="deck-detail.add-card" onClick={() => void openDeckEditor(deck.id, { draft: true })}>
             카드 추가
           </button>
-          <button className="button button--primary" onClick={() => void openStudyLauncher(deck.id, { scope: "all" })}>
+          <button
+            className="button button--primary"
+            data-action-id="deck-detail.study-all"
+            onClick={() => void openStudyLauncher(deck.id, { scope: "all" })}
+            disabled={deck.cards.length === 0}
+          >
             전체 학습
           </button>
         </div>
-      </section>
 
-      <label className="field">
-        <span>Day 검색</span>
-        <input
-          value={daySearch}
-          onChange={(event) => setDaySearch(event.target.value.replace(/[^\d]/g, ""))}
-          placeholder="예: 1, 12, 103"
-          inputMode="numeric"
-        />
-      </label>
+        <label className="field deck-detail-toolbar__search">
+          <span>Day 검색</span>
+          <input
+            value={daySearch}
+            onChange={(event) => setDaySearch(event.target.value.replace(/[^\d]/g, ""))}
+            placeholder="예: 1, 12, 103"
+            inputMode="numeric"
+          />
+        </label>
+      </section>
 
       <section className="day-list">
         {filteredDays.map((day) => {
@@ -119,7 +142,7 @@ export function DeckDetailWindow() {
               <div className="day-card__main">
                 <p className="day-card__eyebrow">Day</p>
                 <h3 className="day-card__title">{day.name}</h3>
-                <p className="day-card__summary">총 {day.card_ids.length}문제</p>
+                <p className="day-card__summary">총 {day.card_ids.length}문제 중 {stats?.total_correct ?? 0}문제 맞춤</p>
               </div>
               <div className="day-card__side">
                 <div className="day-card__accuracy">
@@ -133,13 +156,17 @@ export function DeckDetailWindow() {
                 </div>
                 <div className="day-card__meta">
                   <span>마지막 {formatDayRecentScore(stats)}</span>
-                  <span>누적 O/X {formatDayTotals(stats)}</span>
                 </div>
                 <div className="day-card__actions">
-                  <button className="button button--secondary" onClick={() => void openDayDetail(deck.id, day.day)}>
+                  <button className="button button--secondary" data-action-id={`deck-detail.open-day.${day.day}`} onClick={() => void openDayDetail(deck.id, day.day)}>
                     열기
                   </button>
-                  <button className="button button--primary" onClick={() => void openStudyLauncher(deck.id, { dayNumber: day.day, scope: "day" })}>
+                  <button
+                    className="button button--primary"
+                    data-action-id={`deck-detail.study-day.${day.day}`}
+                    onClick={() => void openStudyLauncher(deck.id, { dayNumber: day.day, scope: "day" })}
+                    disabled={day.card_ids.length === 0}
+                  >
                     학습
                   </button>
                 </div>

@@ -1,0 +1,1 @@
+export { renderMobileQuizRoutes } from "./routes";

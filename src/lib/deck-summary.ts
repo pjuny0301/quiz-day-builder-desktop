@@ -39,7 +39,9 @@ export function calculateDayAccuracyRate(stats?: DayStats): number {
 }
 
 
-// Format cumulative correct and wrong totals for one Day.
-export function formatDayTotals(stats?: DayStats): string {
-  return stats ? `O ${stats.total_correct} · X ${stats.total_wrong}` : "O 0 · X 0";
+// Format cumulative correct and wrong totals as one plain-language progress sentence.
+export function formatDayCumulativeSummary(stats?: DayStats): string {
+  const total = (stats?.total_correct ?? 0) + (stats?.total_wrong ?? 0);
+  const correct = stats?.total_correct ?? 0;
+  return `총 ${total}문제 중 ${correct}문제 맞춤`;
 }

@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import { BackActionButton } from "../components/BackActionButton";
 import { HtmlView } from "../components/HtmlView";
 import { RichHtmlEditor } from "../components/RichHtmlEditor";
 import { WindowShell } from "../components/WindowShell";
-import { plainToHtml } from "../lib/content";
-import { applyDeckSplit, createId, hasHtmlContent, parseBulkCards, previewText } from "../lib/state-utils";
-import { openDeckDetail, openManager } from "../lib/tauri";
+import { applyDeckSplit, createId, hasHtmlContent, previewText } from "../lib/state-utils";
+import { openBulkImport, openDeckDetail, openManager } from "../lib/tauri";
 import { useAppState } from "../state/AppStateContext";
 
 
-// Edit cards only, keeping card creation and bulk import isolated from deck browsing and study.
+// Edit cards only, keeping single-card authoring focused and routing bulk import into its own screen.
 export function DeckEditorWindow() {
   const { state, replaceDeck, isLoading, loadError, saveStatusMessage } = useAppState();
   const [searchParams] = useSearchParams();
@@ -21,9 +21,7 @@ export function DeckEditorWindow() {
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [questionHtml, setQuestionHtml] = useState("");
   const [answerHtml, setAnswerHtml] = useState("");
-  const [bulkText, setBulkText] = useState("");
   const [isDraftCard, setIsDraftCard] = useState(false);
-  const [isBulkImportVisible, setIsBulkImportVisible] = useState(false);
   const [editorNotice, setEditorNotice] = useState("");
   const selectedCard = useMemo(
     () => deck?.cards.find((entry) => entry.id === selectedCardId) ?? null,
@@ -34,9 +32,7 @@ export function DeckEditorWindow() {
     setSelectedCardId(null);
     setQuestionHtml("");
     setAnswerHtml("");
-    setBulkText("");
     setIsDraftCard(shouldOpenDraft);
-    setIsBulkImportVisible(false);
     setEditorNotice("");
   }, [deckId, shouldOpenDraft]);
 
@@ -65,7 +61,7 @@ export function DeckEditorWindow() {
       return;
     }
 
-    // Support keyboard-first editing so repeated card authoring stays fast.
+    // Keep save and new-card creation keyboard-friendly without binding a bulk-import shortcut.
     function handleEditorShortcut(event: KeyboardEvent) {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
@@ -73,9 +69,9 @@ export function DeckEditorWindow() {
         return;
       }
 
-      if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key.toLowerCase() === "i") {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "n") {
         event.preventDefault();
-        toggleBulkImportVisibility();
+        startDraftCard();
       }
     }
 
@@ -83,7 +79,7 @@ export function DeckEditorWindow() {
     return () => {
       window.removeEventListener("keydown", handleEditorShortcut);
     };
-  }, [answerHtml, deck, questionHtml, selectedCardId]);
+  }, [deck, questionHtml, answerHtml, selectedCardId]);
 
   if (isLoading && !deck) {
     return (
@@ -145,11 +141,6 @@ export function DeckEditorWindow() {
     setEditorNotice("");
   }
 
-  // Toggle the bulk-import panel because it is a secondary workflow next to direct card editing.
-  function toggleBulkImportVisibility() {
-    setIsBulkImportVisible((previous) => !previous);
-  }
-
   // Persist the current question and answer panes back into the selected card or a newly created card.
   async function saveCard() {
     if (!hasHtmlContent(questionHtml)) {
@@ -200,56 +191,37 @@ export function DeckEditorWindow() {
     await replaceDeck(applyDeckSplit(nextDeck));
   }
 
-  // Parse bulk card text input and append every valid question-answer pair into the active deck.
-  async function importCards() {
-    const parsed = parseBulkCards(bulkText);
-    if (parsed.cards.length === 0) {
-      setEditorNotice("가져올 수 있는 카드 형식을 찾지 못했습니다. TAB, |, :: 구분자를 확인하세요.");
-      return;
-    }
-    setEditorNotice("");
-    const nextDeck = structuredClone(activeDeck);
-    for (const card of parsed.cards) {
-      nextDeck.cards.push({
-        id: createId(),
-        question_html: plainToHtml(card.question),
-        answer_html: plainToHtml(card.answer),
-      });
-    }
-    setBulkText("");
-    await replaceDeck(applyDeckSplit(nextDeck));
-  }
-
   return (
     <WindowShell
       role="editor"
       eyebrow="카드 편집"
       title={activeDeck.name}
-      description="이 화면은 카드 작성과 수정만 담당합니다. 저장할 때마다 Day 구조는 자동으로 다시 계산됩니다."
+      description="문제와 정답을 한 장씩 편집합니다. 대량 입력은 별도 화면에서 처리합니다."
       status={editorNotice || saveStatusMessage}
       actions={
-        <button className="button button--ghost" onClick={() => void openManager(activeDeck.id)}>
-          목록으로
-        </button>
+        <BackActionButton actionId="editor.back-to-manager" onClick={() => void openManager(activeDeck.id)} />
       }
     >
       <section className="editor-hero">
         <div>
           <p className="hero-panel__eyebrow">핵심 기능</p>
           <h2 className="hero-panel__title">카드 내용 편집</h2>
-          <p className="hero-panel__body">이 화면은 문제와 정답 편집을 우선으로 보여주고, 대량 입력은 필요할 때만 펼칩니다.</p>
+          <p className="hero-panel__body">문제와 정답 작성은 한 축에 두고, 미리보기는 다른 축에 모아 비교합니다.</p>
         </div>
         <div className="editor-hero__actions">
-          <button className="button button--ghost" onClick={() => startDraftCard()}>
-            새 카드
+          <button className="button button--ghost" data-action-id="editor.new-card" onClick={() => startDraftCard()}>
+            새 카드 <span className="button__hint">Ctrl+N</span>
           </button>
-          <button className="button button--secondary" onClick={() => void openDeckDetail(activeDeck.id)}>
+          <button className="button button--ghost" data-action-id="editor.bulk-import" onClick={() => void openBulkImport(activeDeck.id)}>
+            대량 입력
+          </button>
+          <button className="button button--secondary" data-action-id="editor.open-deck-detail" onClick={() => void openDeckDetail(activeDeck.id)}>
             Day 보기
           </button>
         </div>
       </section>
 
-      <section className="editor-layout">
+      <section className="editor-layout editor-layout--review">
         <aside className="editor-sidebar">
           <h3 className="panel-title">카드 목록</h3>
           <div className="card-list">
@@ -267,77 +239,58 @@ export function DeckEditorWindow() {
           </div>
         </aside>
 
-        <div className="editor-main">
-          <section className="editor-pane">
-            <header className="panel-header">
-              <h3 className="panel-title">문제</h3>
-              <p className="panel-subtitle">텍스트나 이미지를 Ctrl+V로 바로 붙여넣을 수 있습니다.</p>
-            </header>
-            <RichHtmlEditor value={questionHtml} onChange={setQuestionHtml} placeholder="문제를 작성하거나 이미지를 붙여넣으세요." />
-          </section>
+        <div className="editor-workspace">
+          <div className="editor-editors">
+            <section className="editor-pane">
+              <header className="panel-header">
+                <h3 className="panel-title">문제</h3>
+                <p className="panel-subtitle">텍스트나 이미지를 Ctrl+V로 바로 붙여넣을 수 있습니다.</p>
+              </header>
+              <RichHtmlEditor value={questionHtml} onChange={setQuestionHtml} placeholder="문제를 작성하거나 이미지를 붙여넣으세요." />
+            </section>
 
-          <section className="editor-pane">
-            <header className="panel-header">
-              <h3 className="panel-title">정답</h3>
-              <p className="panel-subtitle">문제와 분리해 저장해야 학습 모드에서 정확히 활용할 수 있습니다.</p>
-            </header>
-            <RichHtmlEditor value={answerHtml} onChange={setAnswerHtml} placeholder="정답을 작성하거나 이미지를 붙여넣으세요." />
-          </section>
-        </div>
+            <section className="editor-pane">
+              <header className="panel-header">
+                <h3 className="panel-title">정답</h3>
+                <p className="panel-subtitle">문제와 분리해 저장해야 학습 모드에서 정확히 활용할 수 있습니다.</p>
+              </header>
+              <RichHtmlEditor value={answerHtml} onChange={setAnswerHtml} placeholder="정답을 작성하거나 이미지를 붙여넣으세요." />
+            </section>
+          </div>
 
-        <aside className="editor-preview">
-          <section className="preview-panel">
-            <header className="panel-header">
-              <h3 className="panel-title">미리보기</h3>
-              <p className="panel-subtitle">저장되는 카드 내용을 그대로 보여줍니다.</p>
-            </header>
-            <div className="preview-card">
-              <h4>문제</h4>
-              <HtmlView html={questionHtml} className="html-view" />
-            </div>
-            <div className="preview-card">
-              <h4>정답</h4>
-              <HtmlView html={answerHtml} className="html-view" />
-            </div>
-            <div className="stack-actions">
-              <button className="button button--primary" onClick={() => void saveCard()}>
-                {selectedCard ? "카드 수정 저장" : "카드 저장"} <span className="button__hint">Ctrl+S</span>
-              </button>
-              <button className="button button--danger" onClick={() => void deleteCard()} disabled={!selectedCardId}>
-                카드 삭제
-              </button>
-            </div>
-
-            {editorNotice ? <div className="inline-message inline-message--error">{editorNotice}</div> : null}
-          </section>
-
-          <section className="preview-panel">
-            <header className="panel-header">
-              <h3 className="panel-title">대량 입력</h3>
-              <p className="panel-subtitle">한 줄에 카드 하나씩 넣고 구분자는 TAB, `|`, `::`를 사용할 수 있습니다.</p>
-            </header>
-            <button className="button button--ghost" onClick={() => toggleBulkImportVisibility()}>
-              {isBulkImportVisible ? "대량 입력 숨기기" : "대량 입력 열기"} <span className="button__hint">Ctrl+Shift+I</span>
-            </button>
-            {isBulkImportVisible ? (
-              <>
-                <textarea
-                  value={bulkText}
-                  onChange={(event) => setBulkText(event.target.value)}
-                  placeholder={"프랑스의 수도\t파리"}
-                />
-                <button className="button button--secondary" onClick={() => void importCards()}>
-                  카드 가져오기
-                </button>
-              </>
-            ) : (
-              <div className="focus-summary">
-                <strong>보조 입력 기능</strong>
-                <span>지금은 카드 한 장씩 편집에 집중하고, 여러 장을 붙여넣고 싶을 때만 이 영역을 펼쳐 사용하세요.</span>
+          <aside className="editor-preview editor-preview--stack">
+            <section className="preview-panel">
+              <header className="panel-header">
+                <h3 className="panel-title">문제 미리보기</h3>
+                <p className="panel-subtitle">저장되는 문제 내용을 그대로 보여줍니다.</p>
+              </header>
+              <div className="preview-card preview-card--stretch">
+                <HtmlView html={questionHtml} className="html-view" />
               </div>
-            )}
-          </section>
-        </aside>
+            </section>
+
+            <section className="preview-panel">
+              <header className="panel-header">
+                <h3 className="panel-title">정답 미리보기</h3>
+                <p className="panel-subtitle">저장되는 정답 내용을 그대로 보여줍니다.</p>
+              </header>
+              <div className="preview-card preview-card--stretch">
+                <HtmlView html={answerHtml} className="html-view" />
+              </div>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section className="editor-footer-actions">
+        <div className="stack-actions">
+          <button className="button button--primary" data-action-id="editor.save-card" onClick={() => void saveCard()}>
+            카드 저장 <span className="button__hint">Ctrl+S</span>
+          </button>
+          <button className="button button--danger" data-action-id="editor.delete-card" onClick={() => void deleteCard()} disabled={!selectedCardId}>
+            카드 삭제
+          </button>
+        </div>
       </section>
     </WindowShell>
   );

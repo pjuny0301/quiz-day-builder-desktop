@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { WindowShell } from "../components/WindowShell";
+import { registerAutomationAction } from "../lib/automation";
 import { formatDeckRecentSummary } from "../lib/deck-summary";
 import { openDeckCreate, openDeckDetail, openDeckSettings } from "../lib/tauri";
 import { useAppState } from "../state/AppStateContext";
@@ -46,6 +47,25 @@ export function DeckManagerWindow() {
     return [...state.decks].sort((left, right) => left.name.localeCompare(right.name, "ko"));
   }, [state.decks]);
 
+  useEffect(() => {
+    // Register named automation actions so child processes can open decks without relying on screen coordinates.
+    const disposeCreateDeck = registerAutomationAction("manager.create-deck", async () => {
+      await openDeckCreate();
+    });
+    const disposeOpenDeck = registerAutomationAction("manager.open-deck", async (payload) => {
+      const targetDeckId = typeof payload?.deckId === "string" && payload.deckId ? payload.deckId : sortedDecks[0]?.id;
+      if (!targetDeckId) {
+        return;
+      }
+      await openDeckDetail(targetDeckId);
+    });
+
+    return () => {
+      disposeCreateDeck();
+      disposeOpenDeck();
+    };
+  }, [sortedDecks]);
+
   // Toggle the one-card overflow menu so deck editing stays available without cluttering the card face.
   function toggleDeckMenu(event: React.MouseEvent<HTMLButtonElement>, deckId: string) {
     event.stopPropagation();
@@ -82,7 +102,7 @@ export function DeckManagerWindow() {
       status={loadError ? `불러오기 실패: ${loadError}` : saveStatusMessage}
       actions={
         <div className="manager-cta">
-          <button className="button button--primary" onClick={() => void openDeckCreate()}>
+          <button className="button button--primary" data-action-id="manager.create-deck" onClick={() => void openDeckCreate()}>
             <Plus size={16} /> 새 덱 <span className="button__hint">Ctrl+N</span>
           </button>
         </div>
@@ -99,7 +119,7 @@ export function DeckManagerWindow() {
               key={deck.id}
               className={`deck-gallery-card ${highlightedDeckId === deck.id ? "deck-gallery-card--highlighted" : ""}`}
             >
-              <button className="deck-gallery-card__surface" onClick={() => void openDeckDetail(deck.id)}>
+              <button className="deck-gallery-card__surface" data-action-id={`manager.open-deck.${deck.id}`} onClick={() => void openDeckDetail(deck.id)}>
                 <div className="deck-gallery-card__menu">
                   <button className="deck-gallery-card__menu-trigger" title="더보기" onClick={(event) => toggleDeckMenu(event, deck.id)}>
                     <Ellipsis size={16} />

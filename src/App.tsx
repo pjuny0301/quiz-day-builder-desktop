@@ -1,33 +1,42 @@
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { HashRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 
-import { AppStateProvider } from "./state/AppStateContext";
-import { DayDetailWindow } from "./windows/DayDetailWindow";
-import { DeckCreateWindow } from "./windows/DeckCreateWindow";
-import { DeckDetailWindow } from "./windows/DeckDetailWindow";
-import { DeckEditorWindow } from "./windows/DeckEditorWindow";
-import { DeckManagerWindow } from "./windows/DeckManagerWindow";
-import { DeckSettingsWindow } from "./windows/DeckSettingsWindow";
-import { StudyLauncherWindow } from "./windows/StudyLauncherWindow";
-import { StudySessionWindow } from "./windows/StudySessionWindow";
+import { renderDesktopBuilderRoutes } from "@apps/desktop-builder";
+import { renderMobileQuizRoutes } from "@apps/mobile-quiz";
+import { AppErrorBoundary } from "@components/AppErrorBoundary";
+import { AutomationBridge } from "@components/AutomationBridge";
+import { RouteAutomationBridge } from "@components/RouteAutomationBridge";
+import { AppStateProvider } from "@state/AppStateContext";
 
+// Reset scroll on every in-app route change so a previous screen's scroll position cannot hide the next screen.
+function RouteScrollReset() {
+  const location = useLocation();
 
-// Route the shared frontend bundle into dedicated role-specific screens inside one main window.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [location.pathname, location.search]);
+
+  return null;
+}
+
+// Route the shared frontend bundle through desktop-builder and mobile-quiz app boundaries.
 export function App() {
   return (
-    <AppStateProvider>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/manager" replace />} />
-          <Route path="/manager" element={<DeckManagerWindow />} />
-          <Route path="/deck-create" element={<DeckCreateWindow />} />
-          <Route path="/deck-settings" element={<DeckSettingsWindow />} />
-          <Route path="/editor" element={<DeckEditorWindow />} />
-          <Route path="/deck-detail" element={<DeckDetailWindow />} />
-          <Route path="/day-detail" element={<DayDetailWindow />} />
-          <Route path="/study-launcher" element={<StudyLauncherWindow />} />
-          <Route path="/study-session" element={<StudySessionWindow />} />
-        </Routes>
-      </HashRouter>
-    </AppStateProvider>
+    <AppErrorBoundary>
+      <AppStateProvider>
+        <HashRouter>
+          <RouteScrollReset />
+          <AutomationBridge />
+          <RouteAutomationBridge />
+          <Routes>
+            <Route path="/" element={<Navigate to="/manager" replace />} />
+            {renderDesktopBuilderRoutes()}
+            {renderMobileQuizRoutes()}
+          </Routes>
+        </HashRouter>
+      </AppStateProvider>
+    </AppErrorBoundary>
   );
 }

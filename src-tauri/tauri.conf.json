@@ -12,12 +12,14 @@
       {
         "label": "main",
         "title": "덱 관리",
-        "width": 960,
-        "height": 800,
-        "minWidth": 860,
-        "minHeight": 680,
-        "resizable": true,
-        "fullscreen": false
+        "width": 1320,
+        "height": 900,
+        "minWidth": 1320,
+        "minHeight": 900,
+        "resizable": false,
+        "fullscreen": false,
+        "maxWidth": 1320,
+        "maxHeight": 900
       }
     ],
     "security": {

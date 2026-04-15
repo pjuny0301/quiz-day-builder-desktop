@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 
 import type { AppState, StudyMode, WindowQuery, WindowRoute } from "./types";
+import type { AutomationCommand } from "./automation";
 
 
 // Load persisted app state from the Tauri backend JSON store.
@@ -21,8 +22,20 @@ export async function getStorageFilePath(): Promise<string> {
 }
 
 
-// Build the absolute hash route used by all role-specific screens in the single main window.
-export function buildWindowHash(route: WindowRoute, query: WindowQuery = {}): string {
+// Return the external automation command file path used by child-process test drivers.
+export async function getAutomationCommandPath(): Promise<string> {
+  return invoke<string>("automation_command_path");
+}
+
+
+// Read and clear the next queued automation command if one exists.
+export async function pollAutomationCommand(): Promise<AutomationCommand | null> {
+  return invoke<AutomationCommand | null>("poll_automation_command");
+}
+
+
+// Build the absolute hash route used by all role-specific screens inside the fixed single desktop window.
+function buildWindowHash(route: WindowRoute, query: WindowQuery = {}): string {
   const params = new URLSearchParams();
   if (query.deckId) {
     params.set("deckId", query.deckId);
@@ -103,6 +116,12 @@ export async function openDeckSettings(deckId: string): Promise<void> {
 }
 
 
+// Open the dedicated bulk-import screen so multi-card authoring stays separate from single-card editing.
+export async function openBulkImport(deckId: string): Promise<void> {
+  await openRoleWindow("bulk-import", { deckId });
+}
+
+
 // Open the dedicated card editor screen for the chosen deck and optionally start in new-card draft mode.
 export async function openDeckEditor(deckId: string, options?: { draft?: boolean }): Promise<void> {
   await openRoleWindow("editor", { deckId, draft: options?.draft });
@@ -138,3 +157,4 @@ export async function openStudyLauncher(
 export async function openStudySession(deckId: string, mode: StudyMode, dayNumber?: number): Promise<void> {
   await openRoleWindow("study-session", { deckId, dayNumber, mode });
 }
+
