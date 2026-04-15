@@ -9,8 +9,11 @@ Date: 2026-04-16
 
 ## How To Use
 - Run: `powershell -ExecutionPolicy Bypass -File .tools/generate_symbol_map.ps1`
-- Output: `docs/2026-04-16/03_SYMBOL_MAP.md`
+- Output MD: `docs/2026-04-16/03_SYMBOL_MAP.md`
+- Output JSON: `docs/2026-04-16/03_SYMBOL_MAP.json`
 - Start from `index.ts` barrel files before opening feature internals.
+- JSON is the machine-readable source for other Codex runs.
+- symbolIndex lets other Codex runs jump directly from symbol name to file path.
 
 ## Public Entry Points
 - `src/App.tsx` -> app shell entry
@@ -26,7 +29,7 @@ Date: 2026-04-16
 - `re-export` `renderDesktopBuilderRoutes`
 
 ### src/apps/desktop-builder/routes.tsx
-- `function` `renderDesktopBuilderRoutes`
+- `re-export` `renderDesktopBuilderRoutes`
 
 ### src/apps/mobile-quiz/index.ts
 - `re-export` `renderMobileQuizRoutes`
@@ -91,6 +94,12 @@ Date: 2026-04-16
 - `function` `rebuildDays`
 - `function` `registerDaySession`
 - `function` `syncDayStats`
+
+### src/features/builder/index.ts
+- `re-export` `renderBuilderRoutes`
+
+### src/features/builder/routes.tsx
+- `function` `renderBuilderRoutes`
 
 ### src/features/builder/screens/index.ts
 - `re-export` `BulkImportWindow`
@@ -213,4 +222,5 @@ Date: 2026-04-16
 
 ### src/windows/StudySessionWindow.tsx
 - `function` `StudySessionWindow`
+
 

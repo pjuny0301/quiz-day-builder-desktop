@@ -1,0 +1,1363 @@
+{
+    "status":  "generated",
+    "generatedAt":  "2026-04-16",
+    "sourceRoot":  "C:\\quiz_app\\src",
+    "publicEntryPoints":  [
+                              {
+                                  "path":  "src/App.tsx",
+                                  "purpose":  "app shell entry"
+                              },
+                              {
+                                  "path":  "src/apps/desktop-builder/index.ts",
+                                  "purpose":  "desktop-builder route boundary"
+                              },
+                              {
+                                  "path":  "src/apps/mobile-quiz/index.ts",
+                                  "purpose":  "mobile-quiz route boundary"
+                              },
+                              {
+                                  "path":  "src/features/study/session/index.ts",
+                                  "purpose":  "study-session public API"
+                              }
+                          ],
+    "files":  [
+                  {
+                      "path":  "src/App.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "App"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/apps/desktop-builder/index.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "renderDesktopBuilderRoutes"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/apps/desktop-builder/routes.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "renderDesktopBuilderRoutes"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/apps/mobile-quiz/index.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "renderMobileQuizRoutes"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/apps/mobile-quiz/routes.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "renderMobileQuizRoutes"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/AppErrorBoundary.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "class",
+                                          "name":  "AppErrorBoundary"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/AutomationBridge.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "AutomationBridge"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/BackActionButton.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "BackActionButton"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/DeckBasicsFields.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "DeckBasicsFields"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/HtmlView.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "HtmlView"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/ImagePasteField.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "ImagePasteField"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/RichHtmlEditor.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "insertDividerAtCursor"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "insertHtmlAtCursor"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "RichHtmlEditor"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/RouteAutomationBridge.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "RouteAutomationBridge"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/components/WindowShell.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "WindowShell"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/domain/quiz-content.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "buildChoices"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "hasHtmlContent"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "htmlPreviewOrFallback"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "htmlToPlain"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "normalizeStoredHtml"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "normalizeText"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "parseBulkCards"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "parseBulkEditorHtml"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "plainToHtml"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "previewText"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "shuffleArray"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "BulkEditorParseResult"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/domain/quiz-state.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "applyDeckSplit"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "cardsForDay"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "createEmptyState"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "createId"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "formatDaySummary"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "normalizeCard"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "normalizeDay"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "normalizeDayStats"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "normalizeDeck"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "normalizeState"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "rebuildDays"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "registerDaySession"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "syncDayStats"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/features/builder/index.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "renderBuilderRoutes"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/features/builder/routes.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "renderBuilderRoutes"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/features/builder/screens/index.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "BulkImportWindow"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "DayDetailWindow"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "DeckCreateWindow"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "DeckDetailWindow"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "DeckEditorWindow"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "DeckManagerWindow"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "DeckSettingsWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/features/study/screens/index.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "StudyLauncherWindow"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "StudySessionWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/features/study/session/index.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "useStudySessionController"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/features/study/session/types.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "StudyFeedback"
+                                      },
+                                      {
+                                          "kind":  "type",
+                                          "name":  "DebugStudyScenario"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/features/study/session/useStudySessionController.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "useStudySessionController"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/features/study/session/utils.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "chooseQuestionMode"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "createDebugChoiceState"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "createDebugSessionState"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "createSessionState"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "isDebugStudyScenario"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "resolveChoiceOptions"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "studyModeLabel"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/lib/automation.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "registerAutomationAction"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "AutomationCommand"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/lib/content.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "htmlPreviewOrFallback"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "normalizeStoredHtml"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "parseBulkEditorHtml"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "plainToHtml"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/lib/deck-summary.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "calculateDayAccuracyRate"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "formatDayCumulativeSummary"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "formatDayRecentScore"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "formatDeckRecentSummary"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "latestStudiedDay"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/lib/state-utils.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "applyDeckSplit"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "buildChoices"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "cardsForDay"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "createEmptyState"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "createId"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "formatDaySummary"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "hasHtmlContent"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "htmlToPlain"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "normalizeCard"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "normalizeDay"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "normalizeDayStats"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "normalizeDeck"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "normalizeState"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "normalizeText"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "parseBulkCards"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "previewText"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "rebuildDays"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "registerDaySession"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "shuffleArray"
+                                      },
+                                      {
+                                          "kind":  "re-export",
+                                          "name":  "syncDayStats"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/lib/types.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "AppSettings"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "AppState"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "Card"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "DayBucket"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "DayStats"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "Deck"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "SessionState"
+                                      },
+                                      {
+                                          "kind":  "interface",
+                                          "name":  "WindowQuery"
+                                      },
+                                      {
+                                          "kind":  "type",
+                                          "name":  "StudyMode"
+                                      },
+                                      {
+                                          "kind":  "type",
+                                          "name":  "WindowRoute"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/state/AppStateContext.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "AppStateProvider"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "useAppState"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/store/app-state-store.ts",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "cacheState"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "cacheStoragePath"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "hasCachedStateSnapshot"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "readCachedState"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "readCachedStoragePath"
+                                      },
+                                      {
+                                          "kind":  "function",
+                                          "name":  "replaceDeckInState"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/BulkImportWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "BulkImportWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/DayDetailWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "DayDetailWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/DeckCreateWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "DeckCreateWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/DeckDetailWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "DeckDetailWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/DeckEditorWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "DeckEditorWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/DeckManagerWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "DeckManagerWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/DeckSettingsWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "DeckSettingsWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/StudyLauncherWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "StudyLauncherWindow"
+                                      }
+                                  ]
+                  },
+                  {
+                      "path":  "src/windows/StudySessionWindow.tsx",
+                      "symbols":  [
+                                      {
+                                          "kind":  "function",
+                                          "name":  "StudySessionWindow"
+                                      }
+                                  ]
+                  }
+              ],
+    "symbolIndex":  {
+                        "App":  [
+                                    {
+                                        "kind":  "function",
+                                        "path":  "src/App.tsx"
+                                    }
+                                ],
+                        "renderDesktopBuilderRoutes":  [
+                                                           {
+                                                               "kind":  "re-export",
+                                                               "path":  "src/apps/desktop-builder/index.ts"
+                                                           },
+                                                           {
+                                                               "kind":  "re-export",
+                                                               "path":  "src/apps/desktop-builder/routes.tsx"
+                                                           }
+                                                       ],
+                        "renderMobileQuizRoutes":  [
+                                                       {
+                                                           "kind":  "re-export",
+                                                           "path":  "src/apps/mobile-quiz/index.ts"
+                                                       },
+                                                       {
+                                                           "kind":  "function",
+                                                           "path":  "src/apps/mobile-quiz/routes.tsx"
+                                                       }
+                                                   ],
+                        "AppErrorBoundary":  [
+                                                 {
+                                                     "kind":  "class",
+                                                     "path":  "src/components/AppErrorBoundary.tsx"
+                                                 }
+                                             ],
+                        "AutomationBridge":  [
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/components/AutomationBridge.tsx"
+                                                 }
+                                             ],
+                        "BackActionButton":  [
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/components/BackActionButton.tsx"
+                                                 }
+                                             ],
+                        "DeckBasicsFields":  [
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/components/DeckBasicsFields.tsx"
+                                                 }
+                                             ],
+                        "HtmlView":  [
+                                         {
+                                             "kind":  "function",
+                                             "path":  "src/components/HtmlView.tsx"
+                                         }
+                                     ],
+                        "ImagePasteField":  [
+                                                {
+                                                    "kind":  "function",
+                                                    "path":  "src/components/ImagePasteField.tsx"
+                                                }
+                                            ],
+                        "insertDividerAtCursor":  [
+                                                      {
+                                                          "kind":  "function",
+                                                          "path":  "src/components/RichHtmlEditor.tsx"
+                                                      }
+                                                  ],
+                        "insertHtmlAtCursor":  [
+                                                   {
+                                                       "kind":  "function",
+                                                       "path":  "src/components/RichHtmlEditor.tsx"
+                                                   }
+                                               ],
+                        "RichHtmlEditor":  [
+                                               {
+                                                   "kind":  "function",
+                                                   "path":  "src/components/RichHtmlEditor.tsx"
+                                               }
+                                           ],
+                        "RouteAutomationBridge":  [
+                                                      {
+                                                          "kind":  "function",
+                                                          "path":  "src/components/RouteAutomationBridge.tsx"
+                                                      }
+                                                  ],
+                        "WindowShell":  [
+                                            {
+                                                "kind":  "function",
+                                                "path":  "src/components/WindowShell.tsx"
+                                            }
+                                        ],
+                        "buildChoices":  [
+                                             {
+                                                 "kind":  "function",
+                                                 "path":  "src/domain/quiz-content.ts"
+                                             },
+                                             {
+                                                 "kind":  "re-export",
+                                                 "path":  "src/lib/state-utils.ts"
+                                             }
+                                         ],
+                        "hasHtmlContent":  [
+                                               {
+                                                   "kind":  "function",
+                                                   "path":  "src/domain/quiz-content.ts"
+                                               },
+                                               {
+                                                   "kind":  "re-export",
+                                                   "path":  "src/lib/state-utils.ts"
+                                               }
+                                           ],
+                        "htmlPreviewOrFallback":  [
+                                                      {
+                                                          "kind":  "function",
+                                                          "path":  "src/domain/quiz-content.ts"
+                                                      },
+                                                      {
+                                                          "kind":  "re-export",
+                                                          "path":  "src/lib/content.ts"
+                                                      }
+                                                  ],
+                        "htmlToPlain":  [
+                                            {
+                                                "kind":  "function",
+                                                "path":  "src/domain/quiz-content.ts"
+                                            },
+                                            {
+                                                "kind":  "re-export",
+                                                "path":  "src/lib/state-utils.ts"
+                                            }
+                                        ],
+                        "normalizeStoredHtml":  [
+                                                    {
+                                                        "kind":  "function",
+                                                        "path":  "src/domain/quiz-content.ts"
+                                                    },
+                                                    {
+                                                        "kind":  "re-export",
+                                                        "path":  "src/lib/content.ts"
+                                                    }
+                                                ],
+                        "normalizeText":  [
+                                              {
+                                                  "kind":  "function",
+                                                  "path":  "src/domain/quiz-content.ts"
+                                              },
+                                              {
+                                                  "kind":  "re-export",
+                                                  "path":  "src/lib/state-utils.ts"
+                                              }
+                                          ],
+                        "parseBulkCards":  [
+                                               {
+                                                   "kind":  "function",
+                                                   "path":  "src/domain/quiz-content.ts"
+                                               },
+                                               {
+                                                   "kind":  "re-export",
+                                                   "path":  "src/lib/state-utils.ts"
+                                               }
+                                           ],
+                        "parseBulkEditorHtml":  [
+                                                    {
+                                                        "kind":  "function",
+                                                        "path":  "src/domain/quiz-content.ts"
+                                                    },
+                                                    {
+                                                        "kind":  "re-export",
+                                                        "path":  "src/lib/content.ts"
+                                                    }
+                                                ],
+                        "plainToHtml":  [
+                                            {
+                                                "kind":  "function",
+                                                "path":  "src/domain/quiz-content.ts"
+                                            },
+                                            {
+                                                "kind":  "re-export",
+                                                "path":  "src/lib/content.ts"
+                                            }
+                                        ],
+                        "previewText":  [
+                                            {
+                                                "kind":  "function",
+                                                "path":  "src/domain/quiz-content.ts"
+                                            },
+                                            {
+                                                "kind":  "re-export",
+                                                "path":  "src/lib/state-utils.ts"
+                                            }
+                                        ],
+                        "shuffleArray":  [
+                                             {
+                                                 "kind":  "function",
+                                                 "path":  "src/domain/quiz-content.ts"
+                                             },
+                                             {
+                                                 "kind":  "re-export",
+                                                 "path":  "src/lib/state-utils.ts"
+                                             }
+                                         ],
+                        "BulkEditorParseResult":  [
+                                                      {
+                                                          "kind":  "interface",
+                                                          "path":  "src/domain/quiz-content.ts"
+                                                      }
+                                                  ],
+                        "applyDeckSplit":  [
+                                               {
+                                                   "kind":  "function",
+                                                   "path":  "src/domain/quiz-state.ts"
+                                               },
+                                               {
+                                                   "kind":  "re-export",
+                                                   "path":  "src/lib/state-utils.ts"
+                                               }
+                                           ],
+                        "cardsForDay":  [
+                                            {
+                                                "kind":  "function",
+                                                "path":  "src/domain/quiz-state.ts"
+                                            },
+                                            {
+                                                "kind":  "re-export",
+                                                "path":  "src/lib/state-utils.ts"
+                                            }
+                                        ],
+                        "createEmptyState":  [
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/domain/quiz-state.ts"
+                                                 },
+                                                 {
+                                                     "kind":  "re-export",
+                                                     "path":  "src/lib/state-utils.ts"
+                                                 }
+                                             ],
+                        "createId":  [
+                                         {
+                                             "kind":  "function",
+                                             "path":  "src/domain/quiz-state.ts"
+                                         },
+                                         {
+                                             "kind":  "re-export",
+                                             "path":  "src/lib/state-utils.ts"
+                                         }
+                                     ],
+                        "formatDaySummary":  [
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/domain/quiz-state.ts"
+                                                 },
+                                                 {
+                                                     "kind":  "re-export",
+                                                     "path":  "src/lib/state-utils.ts"
+                                                 }
+                                             ],
+                        "normalizeCard":  [
+                                              {
+                                                  "kind":  "function",
+                                                  "path":  "src/domain/quiz-state.ts"
+                                              },
+                                              {
+                                                  "kind":  "re-export",
+                                                  "path":  "src/lib/state-utils.ts"
+                                              }
+                                          ],
+                        "normalizeDay":  [
+                                             {
+                                                 "kind":  "function",
+                                                 "path":  "src/domain/quiz-state.ts"
+                                             },
+                                             {
+                                                 "kind":  "re-export",
+                                                 "path":  "src/lib/state-utils.ts"
+                                             }
+                                         ],
+                        "normalizeDayStats":  [
+                                                  {
+                                                      "kind":  "function",
+                                                      "path":  "src/domain/quiz-state.ts"
+                                                  },
+                                                  {
+                                                      "kind":  "re-export",
+                                                      "path":  "src/lib/state-utils.ts"
+                                                  }
+                                              ],
+                        "normalizeDeck":  [
+                                              {
+                                                  "kind":  "function",
+                                                  "path":  "src/domain/quiz-state.ts"
+                                              },
+                                              {
+                                                  "kind":  "re-export",
+                                                  "path":  "src/lib/state-utils.ts"
+                                              }
+                                          ],
+                        "normalizeState":  [
+                                               {
+                                                   "kind":  "function",
+                                                   "path":  "src/domain/quiz-state.ts"
+                                               },
+                                               {
+                                                   "kind":  "re-export",
+                                                   "path":  "src/lib/state-utils.ts"
+                                               }
+                                           ],
+                        "rebuildDays":  [
+                                            {
+                                                "kind":  "function",
+                                                "path":  "src/domain/quiz-state.ts"
+                                            },
+                                            {
+                                                "kind":  "re-export",
+                                                "path":  "src/lib/state-utils.ts"
+                                            }
+                                        ],
+                        "registerDaySession":  [
+                                                   {
+                                                       "kind":  "function",
+                                                       "path":  "src/domain/quiz-state.ts"
+                                                   },
+                                                   {
+                                                       "kind":  "re-export",
+                                                       "path":  "src/lib/state-utils.ts"
+                                                   }
+                                               ],
+                        "syncDayStats":  [
+                                             {
+                                                 "kind":  "function",
+                                                 "path":  "src/domain/quiz-state.ts"
+                                             },
+                                             {
+                                                 "kind":  "re-export",
+                                                 "path":  "src/lib/state-utils.ts"
+                                             }
+                                         ],
+                        "renderBuilderRoutes":  [
+                                                    {
+                                                        "kind":  "re-export",
+                                                        "path":  "src/features/builder/index.ts"
+                                                    },
+                                                    {
+                                                        "kind":  "function",
+                                                        "path":  "src/features/builder/routes.tsx"
+                                                    }
+                                                ],
+                        "BulkImportWindow":  [
+                                                 {
+                                                     "kind":  "re-export",
+                                                     "path":  "src/features/builder/screens/index.ts"
+                                                 },
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/windows/BulkImportWindow.tsx"
+                                                 }
+                                             ],
+                        "DayDetailWindow":  [
+                                                {
+                                                    "kind":  "re-export",
+                                                    "path":  "src/features/builder/screens/index.ts"
+                                                },
+                                                {
+                                                    "kind":  "function",
+                                                    "path":  "src/windows/DayDetailWindow.tsx"
+                                                }
+                                            ],
+                        "DeckCreateWindow":  [
+                                                 {
+                                                     "kind":  "re-export",
+                                                     "path":  "src/features/builder/screens/index.ts"
+                                                 },
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/windows/DeckCreateWindow.tsx"
+                                                 }
+                                             ],
+                        "DeckDetailWindow":  [
+                                                 {
+                                                     "kind":  "re-export",
+                                                     "path":  "src/features/builder/screens/index.ts"
+                                                 },
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/windows/DeckDetailWindow.tsx"
+                                                 }
+                                             ],
+                        "DeckEditorWindow":  [
+                                                 {
+                                                     "kind":  "re-export",
+                                                     "path":  "src/features/builder/screens/index.ts"
+                                                 },
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/windows/DeckEditorWindow.tsx"
+                                                 }
+                                             ],
+                        "DeckManagerWindow":  [
+                                                  {
+                                                      "kind":  "re-export",
+                                                      "path":  "src/features/builder/screens/index.ts"
+                                                  },
+                                                  {
+                                                      "kind":  "function",
+                                                      "path":  "src/windows/DeckManagerWindow.tsx"
+                                                  }
+                                              ],
+                        "DeckSettingsWindow":  [
+                                                   {
+                                                       "kind":  "re-export",
+                                                       "path":  "src/features/builder/screens/index.ts"
+                                                   },
+                                                   {
+                                                       "kind":  "function",
+                                                       "path":  "src/windows/DeckSettingsWindow.tsx"
+                                                   }
+                                               ],
+                        "StudyLauncherWindow":  [
+                                                    {
+                                                        "kind":  "re-export",
+                                                        "path":  "src/features/study/screens/index.ts"
+                                                    },
+                                                    {
+                                                        "kind":  "function",
+                                                        "path":  "src/windows/StudyLauncherWindow.tsx"
+                                                    }
+                                                ],
+                        "StudySessionWindow":  [
+                                                   {
+                                                       "kind":  "re-export",
+                                                       "path":  "src/features/study/screens/index.ts"
+                                                   },
+                                                   {
+                                                       "kind":  "function",
+                                                       "path":  "src/windows/StudySessionWindow.tsx"
+                                                   }
+                                               ],
+                        "useStudySessionController":  [
+                                                          {
+                                                              "kind":  "re-export",
+                                                              "path":  "src/features/study/session/index.ts"
+                                                          },
+                                                          {
+                                                              "kind":  "function",
+                                                              "path":  "src/features/study/session/useStudySessionController.ts"
+                                                          }
+                                                      ],
+                        "StudyFeedback":  [
+                                              {
+                                                  "kind":  "interface",
+                                                  "path":  "src/features/study/session/types.ts"
+                                              }
+                                          ],
+                        "DebugStudyScenario":  [
+                                                   {
+                                                       "kind":  "type",
+                                                       "path":  "src/features/study/session/types.ts"
+                                                   }
+                                               ],
+                        "chooseQuestionMode":  [
+                                                   {
+                                                       "kind":  "function",
+                                                       "path":  "src/features/study/session/utils.ts"
+                                                   }
+                                               ],
+                        "createDebugChoiceState":  [
+                                                       {
+                                                           "kind":  "function",
+                                                           "path":  "src/features/study/session/utils.ts"
+                                                       }
+                                                   ],
+                        "createDebugSessionState":  [
+                                                        {
+                                                            "kind":  "function",
+                                                            "path":  "src/features/study/session/utils.ts"
+                                                        }
+                                                    ],
+                        "createSessionState":  [
+                                                   {
+                                                       "kind":  "function",
+                                                       "path":  "src/features/study/session/utils.ts"
+                                                   }
+                                               ],
+                        "isDebugStudyScenario":  [
+                                                     {
+                                                         "kind":  "function",
+                                                         "path":  "src/features/study/session/utils.ts"
+                                                     }
+                                                 ],
+                        "resolveChoiceOptions":  [
+                                                     {
+                                                         "kind":  "function",
+                                                         "path":  "src/features/study/session/utils.ts"
+                                                     }
+                                                 ],
+                        "studyModeLabel":  [
+                                               {
+                                                   "kind":  "function",
+                                                   "path":  "src/features/study/session/utils.ts"
+                                               }
+                                           ],
+                        "registerAutomationAction":  [
+                                                         {
+                                                             "kind":  "function",
+                                                             "path":  "src/lib/automation.ts"
+                                                         }
+                                                     ],
+                        "AutomationCommand":  [
+                                                  {
+                                                      "kind":  "interface",
+                                                      "path":  "src/lib/automation.ts"
+                                                  }
+                                              ],
+                        "calculateDayAccuracyRate":  [
+                                                         {
+                                                             "kind":  "function",
+                                                             "path":  "src/lib/deck-summary.ts"
+                                                         }
+                                                     ],
+                        "formatDayCumulativeSummary":  [
+                                                           {
+                                                               "kind":  "function",
+                                                               "path":  "src/lib/deck-summary.ts"
+                                                           }
+                                                       ],
+                        "formatDayRecentScore":  [
+                                                     {
+                                                         "kind":  "function",
+                                                         "path":  "src/lib/deck-summary.ts"
+                                                     }
+                                                 ],
+                        "formatDeckRecentSummary":  [
+                                                        {
+                                                            "kind":  "function",
+                                                            "path":  "src/lib/deck-summary.ts"
+                                                        }
+                                                    ],
+                        "latestStudiedDay":  [
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/lib/deck-summary.ts"
+                                                 }
+                                             ],
+                        "AppSettings":  [
+                                            {
+                                                "kind":  "interface",
+                                                "path":  "src/lib/types.ts"
+                                            }
+                                        ],
+                        "AppState":  [
+                                         {
+                                             "kind":  "interface",
+                                             "path":  "src/lib/types.ts"
+                                         }
+                                     ],
+                        "Card":  [
+                                     {
+                                         "kind":  "interface",
+                                         "path":  "src/lib/types.ts"
+                                     }
+                                 ],
+                        "DayBucket":  [
+                                          {
+                                              "kind":  "interface",
+                                              "path":  "src/lib/types.ts"
+                                          }
+                                      ],
+                        "DayStats":  [
+                                         {
+                                             "kind":  "interface",
+                                             "path":  "src/lib/types.ts"
+                                         }
+                                     ],
+                        "Deck":  [
+                                     {
+                                         "kind":  "interface",
+                                         "path":  "src/lib/types.ts"
+                                     }
+                                 ],
+                        "SessionState":  [
+                                             {
+                                                 "kind":  "interface",
+                                                 "path":  "src/lib/types.ts"
+                                             }
+                                         ],
+                        "WindowQuery":  [
+                                            {
+                                                "kind":  "interface",
+                                                "path":  "src/lib/types.ts"
+                                            }
+                                        ],
+                        "StudyMode":  [
+                                          {
+                                              "kind":  "type",
+                                              "path":  "src/lib/types.ts"
+                                          }
+                                      ],
+                        "WindowRoute":  [
+                                            {
+                                                "kind":  "type",
+                                                "path":  "src/lib/types.ts"
+                                            }
+                                        ],
+                        "AppStateProvider":  [
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/state/AppStateContext.tsx"
+                                                 }
+                                             ],
+                        "useAppState":  [
+                                            {
+                                                "kind":  "function",
+                                                "path":  "src/state/AppStateContext.tsx"
+                                            }
+                                        ],
+                        "cacheState":  [
+                                           {
+                                               "kind":  "function",
+                                               "path":  "src/store/app-state-store.ts"
+                                           }
+                                       ],
+                        "cacheStoragePath":  [
+                                                 {
+                                                     "kind":  "function",
+                                                     "path":  "src/store/app-state-store.ts"
+                                                 }
+                                             ],
+                        "hasCachedStateSnapshot":  [
+                                                       {
+                                                           "kind":  "function",
+                                                           "path":  "src/store/app-state-store.ts"
+                                                       }
+                                                   ],
+                        "readCachedState":  [
+                                                {
+                                                    "kind":  "function",
+                                                    "path":  "src/store/app-state-store.ts"
+                                                }
+                                            ],
+                        "readCachedStoragePath":  [
+                                                      {
+                                                          "kind":  "function",
+                                                          "path":  "src/store/app-state-store.ts"
+                                                      }
+                                                  ],
+                        "replaceDeckInState":  [
+                                                   {
+                                                       "kind":  "function",
+                                                       "path":  "src/store/app-state-store.ts"
+                                                   }
+                                               ]
+                    }
+}

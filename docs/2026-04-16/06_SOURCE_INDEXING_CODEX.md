@@ -17,12 +17,14 @@
 - public entry map
 - feature boundary map
 - 다른 Codex가 바로 읽어 적용할 수 있는 machine-readable 인덱스 산출물
+- symbol map은 file/path + symbolIndex 형태로 특정 화면/상태/함수로 즉시 점프 가능해야 한다
 - 필요 시 non-exported symbol map 보조 도구
 
 ## 출력 방식
 - 앱 런타임 코드를 건드리지 않고 도구/문서 중심으로 결과를 낸다.
 - 결과는 즉시 재사용 가능해야 한다.
 - 최소한 `문서형 결과 + 스크립트 + 기계가 읽기 쉬운 산출물(JSON 등)` 중 두 가지 이상을 남긴다.
+- machine-readable output에는 파일별 symbol list와 symbolIndex를 포함한다.
 - 메인 에이전트 리뷰 후 승인된 결과만 최종 커밋 대상으로 본다.
 
 ## 하지 말 것
