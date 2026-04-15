@@ -1,4 +1,4 @@
-import { BackActionButton } from "@components/BackActionButton";
+﻿import { BackActionButton } from "@components/BackActionButton";
 import { HtmlView } from "@components/HtmlView";
 import { WindowShell } from "@components/WindowShell";
 import { useStudySessionController } from "@features/study/session";

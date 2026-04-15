@@ -1,6 +1,5 @@
-import { createEmptyState, normalizeDeck, normalizeState } from "../domain/quiz-state";
-import { getStorageFilePath, loadAppState, saveAppState } from "../lib/tauri";
-import type { AppState, Deck } from "../lib/types";
+﻿import { createEmptyState, normalizeDeck, normalizeState, type AppState, type Deck } from "@domain";
+import { getStorageFilePath, loadAppState, saveAppState } from "@lib/tauri";
 
 const APP_STATE_CACHE_KEY = "quizdaybuilder:app-state";
 const STORAGE_PATH_CACHE_KEY = "quizdaybuilder:storage-path";

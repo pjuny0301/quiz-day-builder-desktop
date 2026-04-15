@@ -1,6 +1,5 @@
-import { buildChoices, htmlToPlain, normalizeText, shuffleArray } from "@lib/state-utils";
-import type { Card, SessionState, StudyMode } from "@lib/types";
-import type { DebugStudyScenario } from "@features/study/session/types";
+﻿import { buildChoices, htmlToPlain, normalizeText, shuffleArray, type Card, type SessionState, type StudyMode } from "@domain";
+import type { DebugStudyScenario } from "./types";
 
 // Build one fresh session snapshot from the chosen deck scope and study mode.
 export function createSessionState(

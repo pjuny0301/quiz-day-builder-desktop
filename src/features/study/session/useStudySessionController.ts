@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type MutableRefObject, type SetStateAction } from "react";
+﻿import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type MutableRefObject, type SetStateAction } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { registerAutomationAction } from "@lib/automation";
-import { cardsForDay, htmlToPlain, normalizeText, registerDaySession } from "@lib/state-utils";
 import { goBackInApp } from "@lib/tauri";
-import type { Card, Deck, SessionState, StudyMode } from "@lib/types";
+import { cardsForDay, htmlToPlain, normalizeText, registerDaySession, type Card, type Deck, type SessionState, type StudyMode } from "@domain";
 import { useAppState } from "@state/AppStateContext";
-import type { DebugStudyScenario, StudyFeedback } from "@features/study/session/types";
-import { chooseQuestionMode, createDebugChoiceState, createDebugSessionState, createSessionState, isDebugStudyScenario, resolveChoiceOptions, studyModeLabel } from "@features/study/session/utils";
+import type { DebugStudyScenario, StudyFeedback } from "./types";
+import { chooseQuestionMode, createDebugChoiceState, createDebugSessionState, createSessionState, isDebugStudyScenario, resolveChoiceOptions, studyModeLabel } from "./utils";
 
 // Describe every value and callback the study-session screen needs from the controller layer.
 interface StudySessionControllerResult {

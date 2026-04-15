@@ -1,7 +1,7 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+﻿import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 
-import { cacheState, cacheStoragePath, hasCachedStateSnapshot, loadPersistedAppState, persistAppState, readCachedState, readCachedStoragePath, replaceDeckInState } from "../store/app-state-store";
-import type { AppState, Deck } from "../lib/types";
+import { cacheState, cacheStoragePath, hasCachedStateSnapshot, loadPersistedAppState, persistAppState, readCachedState, readCachedStoragePath, replaceDeckInState } from "@store";
+import type { AppState, Deck } from "@domain";
 
 interface AppStateContextValue {
   state: AppState;

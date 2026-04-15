@@ -1,4 +1,4 @@
-{
+﻿{
   "compilerOptions": {
     "target": "ES2021",
     "useDefineForClassFields": true,
@@ -24,7 +24,9 @@
       "@features/*": ["src/features/*"],
       "@lib/*": ["src/lib/*"],
       "@state/*": ["src/state/*"],
+      "@domain": ["src/domain/index.ts"],
       "@domain/*": ["src/domain/*"],
+      "@store": ["src/store/index.ts"],
       "@store/*": ["src/store/*"]
     }
   },
